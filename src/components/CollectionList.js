@@ -33,7 +33,7 @@ export default class CollectionList extends Component {
   renderLabels = (labelList) => {
     var uniqueLabels = new Set();
     labelList.forEach(name => uniqueLabels.add(this.stripUniqueNumber(name.name)));
-    return <div><span id='labelSpan'>Label(s)</span>: {[...uniqueLabels].join(', ')}</div>;
+    return <span>{[...uniqueLabels].join(', ')}</span>;
   }
 
   // to get the Discogs page for the specific album
@@ -64,7 +64,7 @@ export default class CollectionList extends Component {
               {this.renderArtists(album.basic_information.artists)}
               {this.renderLinkToDiscogs(album.basic_information)}
               {album.basic_information.year === 0 ? 'Unknown' : album.basic_information.year}
-              {this.renderLabels(album.basic_information.labels)}
+              <div><span id='labelSpan'>Label</span>:{this.renderLabels(album.basic_information.labels)}</div>
             </div>
           )
         }
