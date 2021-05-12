@@ -33,28 +33,26 @@ export default class CollectionList extends Component {
   renderLabels = (labelList) => {
     var uniqueLabels = new Set();
     labelList.forEach(name => uniqueLabels.add(this.stripUniqueNumber(name.name)));
-    return <div>{[...uniqueLabels].join(', ')}</div>
+    return <div><span id='labelSpan'>Label(s)</span>: {[...uniqueLabels].join(', ')}</div>;
   }
 
   // to get the Discogs page for the specific album
   renderLinkToDiscogs = (basicInfo) => {
-    console.log('basic Info')
-    console.log(basicInfo)
-    return <div></div>
+    return <h3>{basicInfo.title}</h3>;
   }
 
   // Discogs like to put numbers to differenciate artists with same name -> remove that part
   renderArtists = (artist) => {
     var uniqueArtist = new Set();
     artist.forEach(name => uniqueArtist.add(this.stripUniqueNumber(name.name)));
-    return <h1>{[...uniqueArtist].join(', ')}</h1>
+    return <h1>{[...uniqueArtist].join(', ')}</h1>;
   }
 
   // Discogs numbers different artists/labels to differntiate ones with the same name, this
   // is to strip that since it's not necessary here
   stripUniqueNumber(aristOrLabel){
     // eslint-disable-next-line
-    return aristOrLabel.replace(/\(([^\)]+)\)/, '');
+    return aristOrLabel.replace(/\(([^\)]+)\)/, '').trim();
   }
 
   render = () => {
