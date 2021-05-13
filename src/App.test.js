@@ -20,14 +20,11 @@ test('rendering labels', () => {
   expect(thirdList).toEqual(<span>Label 1, Label 2</span>);
 });
 
-test('rendering link to Discogs', () => {
-  var info = {title: 'Album Title'};
-  expect(wrapper.instance().renderLinkToDiscogs(info)).toEqual(<h3>Album Title</h3>);
-});
-
 test('rendering artist', () => {
   var singleArtist = [{name: 'Artist'}];
   expect(wrapper.instance().renderArtists(singleArtist)).toEqual(<h1>Artist</h1>);
+  var multipleArtists = [{name: 'Artist'}, {name: 'Artist 1'}];
+  expect(wrapper.instance().renderArtists(multipleArtists)).toEqual(<h1>Artist, Artist 1</h1>);
 });
 
 test('number stripper', () => {

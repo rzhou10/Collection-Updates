@@ -15,6 +15,7 @@ export default class CollectionList extends Component {
     .then((response) => {
       axios.get(response.data.pagination.urls.last)
       .then((latestUpdates) => {
+        // to do, need to get the last elements of the 2nd to last page if there are less than 10
         if (latestUpdates.data.releases.length < 10){
           this.setState({
             latest: latestUpdates.data.releases
@@ -36,12 +37,6 @@ export default class CollectionList extends Component {
     return <span>{[...uniqueLabels].join(', ')}</span>;
   }
 
-  // to get the Discogs page for the specific album
-  renderLinkToDiscogs = (basicInfo) => {
-    return <h3>{basicInfo.title}</h3>;
-  }
-
-  // Discogs like to put numbers to differenciate artists with same name -> remove that part
   renderArtists = (artist) => {
     var uniqueArtist = new Set();
     artist.forEach(name => uniqueArtist.add(this.stripUniqueNumber(name.name)));
@@ -60,11 +55,11 @@ export default class CollectionList extends Component {
       <div className="row">
         {
           this.state.latest.map(album => 
-            <div className="album">
+            <div key={album.id} className='album'>
               {this.renderArtists(album.basic_information.artists)}
-              {this.renderLinkToDiscogs(album.basic_information)}
-              {album.basic_information.year === 0 ? 'Unknown' : album.basic_information.year}
-              <div><span id='labelSpan'>Label</span>:{this.renderLabels(album.basic_information.labels)}</div>
+              <h3>{album.basic_information.title}</h3>
+              <div>{album.basic_information.year === 0 ? 'Unknown' : album.basic_information.year}</div>
+              <div><span id='labelSpan'>Label</span>: {this.renderLabels(album.basic_information.labels)}</div>
             </div>
           )
         }
